@@ -1,7 +1,7 @@
 import csv
 
 # Opens a csv with every valid type combination(each type a base19 character) and writes it to a list
-with open('Pokemon Team Comps/alltypes.csv', 'rt') as f:
+with open('alltypes.csv', 'rt') as f:
     csv_reader = csv.reader(f)
     typelist = []
     for line in csv_reader:
