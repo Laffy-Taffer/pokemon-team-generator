@@ -1,0 +1,20 @@
+Type, Base 19 value
+none (for monotypes), 0
+normal, 1
+fire, 2
+water, 3
+electric, 4
+grass, 5
+ice, 6
+fighting, 7
+poison, 8
+ground, 9
+flying, a
+psychic, b
+bug, c
+rock, d
+ghost, e
+dragon, f
+dark, g
+steel, h
+fairy, i
