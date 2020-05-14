@@ -1,7 +1,7 @@
 import csv
 
 # Opens a csv with every valid type combination(each type a base19 character) and writes it to a list
-with open('alltypes.csv', 'rt') as f:
+with open('Pokemon Team Comps/alltypes.csv', 'rt') as f:
     csv_reader = csv.reader(f)
     typelist = []
     for line in csv_reader:
@@ -64,7 +64,7 @@ movetype = {"none":     "0",
             "fairy":    "i"}
 
 
-with open('teams.csv', 'wt', newline='') as f:
+with open('Pokemon Team Comps/teams.csv', 'wt', newline='') as f:
     csv_writer = csv.writer(f)
     csv_writer.writerow(["Check #", "Team", "Max # of weaknesses"])
 
@@ -87,14 +87,14 @@ with open('teams.csv', 'wt', newline='') as f:
         team = numbertobase(b171, 171)
         if len(team) == 5:
             team = [0] + team
-        team.sort()
-        
+
         retry = False
         for digit in range(len(team)):
             if digit != 0:
-                if team[digit] < team[digit]:
+                if team[digit] <= team[digit-1]:
                     retry = True
                     break
+        team.sort()
         # Checks for dupes and repeated combos
         if len(team) != len(set(tuple(team))) or team in teams or retry:
             if len(team) != len(set(tuple(team))) or team in teams or retry:
