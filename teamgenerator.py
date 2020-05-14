@@ -42,6 +42,7 @@ matchup = [
     [1, 1, 0.5, 0.5, 0.5, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5, 2],
     [1, 1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1]]
 
+# Doesn't actually do anything, its just for my own reference
 movetype = {"none":     "0",
             "normal":   "1",
             "fire":     "2",
@@ -84,16 +85,18 @@ with open('teams.csv', 'wt', newline='') as f:
 
         # Converts number to a list, each item corresponding to a digit in base 171(# of unique pkmn types)
         team = numbertobase(b171, 171)
+        if len(team) == 5:
+            team = [0] + team
         team.sort()
 
-        # Checks for dupes and repeated combos, also adds a pokemon to the front if ==5
-        if len(team) != len(set(tuple(team))) or team in teams or len(team) < 6:
-            if len(team) != len(set(tuple(team))) or team in teams or len(team) < 5:
-                continue
-
-            # If the base 19 list is only 5 items long, appends a pokemon to the beginning and checks for dupes
-            team = [0] + team
-            if len(team) != len(set(tuple(team))):
+        for digit in range(len(team)):
+            if digit != 0:
+                if team[digit] < team[digit]:
+                    retry = True
+                    break
+        # Checks for dupes and repeated combos
+        if len(team) != len(set(tuple(team))) or team in teams or retry:
+            if len(team) != len(set(tuple(team))) or team in teams or retry:
                 continue
 
         teamnum += 1
