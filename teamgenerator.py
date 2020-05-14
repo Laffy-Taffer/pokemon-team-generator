@@ -88,7 +88,8 @@ with open('teams.csv', 'wt', newline='') as f:
         if len(team) == 5:
             team = [0] + team
         team.sort()
-
+        
+        retry = False
         for digit in range(len(team)):
             if digit != 0:
                 if team[digit] < team[digit]:
