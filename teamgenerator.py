@@ -21,13 +21,13 @@ if not os.path.exists('output'):
 
 def teamcomp(r):
     global length, typelist, matchup
-    comborange = length-r+1
+    comborange = length - r + 1
     combofact = math.factorial(comborange)
     print("Starting team check", r, "Number of combinations:",
-          '{:,}'.format(int(combofact/(teamfact*math.factorial(comborange-5)))))
+          '{:,}'.format(int(combofact / (teamfact * math.factorial(comborange - 5)))))
     with open('output/teams' + str(r) + '.csv', 'wt', newline='') as c:
         writer = csv.writer(c)
-        for team in itertools.combinations(range(r+1, length), 5):
+        for team in itertools.combinations(range(r + 1, length), 5):
             team = tuple([r] + [t for t in team])
             weaknesses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             send = True
@@ -58,21 +58,13 @@ def pool_handler(n):
 if __name__ == '__main__':
 
     x = os.listdir("output")
-    start = highest = 0
-    if not new:
-        everything = [a.replace('teams', '') for a in x]
-        highest = max([int(a.replace('teams', '').replace('done', '').replace('.csv', '')) for a in x])
-        nextone = max([int(a.replace('teams', '').replace('.csv', '')) for a in x if 'done' not in a])
-        start = input("Input value to count down from\nHighest value: " + str(highest) +
-                      "  Highest uncalculated value: " + str(nextone) + "\n")
-    poolcount = input("How many cores do you want to use?\n")
-
-    try:
-        start = int(start) + 1
-        poolcount = int(poolcount)
-        if start < 1 or start > highest or poolcount < 1:
-            quit()
-    except ValueError:
-        quit()
-        
+    start = length - 5
+    # start = highest = 0
+    # if not new:
+    #    everything = [a.replace('teams', '') for a in x]
+    #    highest = max([int(a.replace('teams', '').replace('done', '').replace('.csv', '')) for a in x])
+    #    nextone = max([int(a.replace('teams', '').replace('.csv', '')) for a in x if 'done' not in a])
+    #    start = input("Input value to count down from\nHighest value: " + str(highest) +
+    #                  "  Highest uncalculated value: " + str(nextone) + "\n")
+    poolcount = int(input("How many cores do you want to use?\n"))
     pool_handler(poolcount)
