@@ -11,10 +11,6 @@ with open('all types sorted.csv', 'rt') as f:  # Reads type matchup list and ass
         matchup += [line[1:]]
 
 
-teamlist = list(itertools.combinations(range(len(matchup)-4), 2))
-teamcount = len(teamlist)
-
-
 def matchupcheck(team):  # Checks if a team has no shared weaknesses
     for element in range(18):
         i = 0
@@ -27,9 +23,8 @@ def matchupcheck(team):  # Checks if a team has no shared weaknesses
 
 
 def teamcomp(types):  # Generate team combinations, runs matchupcheck, writes team to
-    global typelist, matchup, teamlist
+    global typelist, matchup
     if os.path.isfile('output/' + str(types[0]) + '/' + str(types[1]) + ' done.csv'):
-        teamlist.remove(types)
         return
     print("Starting pass on " + str(types))
     savecount = 0
@@ -46,15 +41,12 @@ def teamcomp(types):  # Generate team combinations, runs matchupcheck, writes te
 
     os.rename('output/' + str(types[0]) + '/' + str(types[1]) + '.csv',
               'output/' + str(types[0]) + '/' + str(types[1]) + ' done.csv')
-    teamlist.remove(types)
-    x = (((teamcount - len(teamlist)) / teamcount) * 100)
-    print("       Completed " + str(types) + " Saved:" + str(savecount) + " Remaining:" + str(len(teamlist)) + " " +
-          "%.3f" % x + "%")
+    print("       Completed " + str(types) + " Saved:" + str(savecount))
 
 
 def poolhandler(wcount):
     p = Pool(wcount)
-    p.map(teamcomp, reversed(list(itertools.combinations(range(len(matchup)-4), 2))))
+    p.map(teamcomp, list(itertools.combinations(range(len(matchup)-4), 2)))
 
 
 if __name__ == '__main__':
